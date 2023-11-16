@@ -1,29 +1,26 @@
-const fetch = require('node-fetch')
-
-ProxyAgent = require('proxy-agent'),
-fs = require('fs');
-
 document.getElementById('getLinkButton').addEventListener("click", getLink);
 
-function getLink() {
+function getLink(link) {
     var inputElement = document.getElementById('linkInput');
     var inputLink = inputElement.value;
 
     console.log(inputLink);
+    link = inputLink;
 }
 
 function showBypassedUrl(url, bypassedUrl, time) {
-    let div = document.createElement('div');
-    div.className = 'bypassedLink';
-    div.innerHTML = `<a href="${url}" target="_blank">${url}</a> -> <a href="${bypassedUrl}" target="_blank">${bypassedUrl}</a> <span class="time">${time}</span>`;
-    document.getElementById('bypassedLinks').appendChild(div);
+    // Create a new text node
+    let textNode = document.createTextNode(bypassedUrl);
+
+    // Get the element where you want to display the bypassedUrl
+    let displayElement = document.getElementById('bypassedLinks');
+
+    // Append the text node to the display element
+    displayElement.appendChild(textNode);
 }
 
 function showErrors(url, error, time) {
-    let div = document.createElement('div');
-    div.className = 'error';
-    div.innerHTML = `<a href="${url}" target="_blank">${url}</a> -> <span class="error">${error}</span> <span class="time">${time}</span>`;
-    document.getElementById('bypassedLinks').appendChild(div);
+    let displayElement = document.getElementById('bypassedLinks');
 }
 
 const ipLoggers = [
@@ -119,12 +116,12 @@ function adfly(html, url, msg, timestamp) {
         if(r.includes("linkvertise.com")){
             linkvertise(new URL(decodeURIComponent(r.split('dest=')[1])));
         }
-        return createBypassEmbed(url, decodeURIComponent(r.split('dest=')[1]), timestamp, msg)
+        return showBypassedUrl(url, decodeURIComponent(r.split('dest=')[1]), timestamp, msg)
     }
     if(r.includes("linkvertise.com")){
         linkvertise(new URL(r));
     }
-    createBypassEmbed(url, r, timestamp, msg)
+    showBypassedUrl(url, r, timestamp, msg)
 }
 
     async function linkvertise(url) { // bypass code for linkvertise
@@ -181,4 +178,4 @@ function adfly(html, url, msg, timestamp) {
             return showErrors('The link provided is invalid')
         }
     }
-    validateUrl(link)
+    validateUrl(getLink());

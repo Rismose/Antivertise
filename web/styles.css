@@ -98,3 +98,12 @@ input {
     font-size: 1.2rem;
     text-align: center;
 }
+
+.bypassedLinks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 2%;
+    height: 25vh;
+}
