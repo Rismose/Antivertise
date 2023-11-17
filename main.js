@@ -1,12 +1,11 @@
+const fetch = require('node-fetch');
+const ProxyAgent = require('proxy-agent');
+const fs = require('fs');
+
+
 document.getElementById('getLinkButton').addEventListener("click", getLink);
 
-function getLink(link) {
-    var inputElement = document.getElementById('linkInput');
-    var inputLink = inputElement.value;
 
-    console.log(inputLink);
-    link = inputLink;
-}
 
 function showBypassedUrl(url, bypassedUrl, time) {
     // Create a new text node
@@ -17,10 +16,6 @@ function showBypassedUrl(url, bypassedUrl, time) {
 
     // Append the text node to the display element
     displayElement.appendChild(textNode);
-}
-
-function showErrors(url, error, time) {
-    let displayElement = document.getElementById('bypassedLinks');
 }
 
 const ipLoggers = [
